@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    container_name: nginx-container
+    networks:
+      - mynetwork
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5001:5000"
+    container_name: backend-container
+    env_file:
+      - ./env/backend.env
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
